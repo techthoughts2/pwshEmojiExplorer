@@ -1,0 +1,9 @@
+{
+    "Parameters": {
+        "ServiceName": "pwshEmojiExplorer",
+        "LMFunctionS3KeypwshEEUnicodeVersionMonitor": "< This value is replace by the UnitTestAndBuild CodeBuild step in the Lambda's build file >",
+        "LMFunctionHandlerpwshEEUnicodeVersionMonitor": "< This value is replace by the UnitTestAndBuild CodeBuild step in the Lambda's build file >",
+        "ArtifactS3Bucket": "will be replaced during CodeBuild process",
+        "ArtifactS3KeyPrefix": "will be replaced during CodeBuild process"
+    }
+}

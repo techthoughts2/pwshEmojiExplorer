@@ -1,0 +1,348 @@
+---
+AWSTemplateFormatVersion: '2010-09-09'
+
+Description: 'AUTOMATED: pwshEmojiExplorer - infrastructure resource deployment'
+
+Transform: 'AWS::Serverless-2016-10-31'
+
+Parameters:
+  ServiceName:
+    Type: String
+    Description: The name of the service being deployed. Used for Developer AWS Account Resource Names.
+
+  ResourceType:
+    Type: String
+    Description: Determine the type of resource that will be deployed
+    AllowedValues:
+      - core
+      - dev
+      - test
+      - prod
+
+Resources:
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3-bucket.html
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3-bucket-publicaccessblockconfiguration.html
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3-bucket-websiteconfiguration.html
+  PSEEFinalXMLBucket:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Delete
+    Properties:
+      # AccelerateConfiguration: AccelerateConfiguration
+      AccessControl: BucketOwnerFullControl
+      # AnalyticsConfigurations:
+      #   - AnalyticsConfiguration
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      # BucketName: !Sub ${ServiceName}-${AWS::AccountId}-website
+      # CorsConfiguration:
+      #   CorsConfiguration
+      # IntelligentTieringConfigurations:
+      #   - IntelligentTieringConfiguration
+      # InventoryConfigurations:
+      #   - InventoryConfiguration
+      # LifecycleConfiguration:
+      #   Rules:
+      #       -
+      #         AbortIncompleteMultipartUpload:
+      #           DaysAfterInitiation: 7
+      #         Status: Enabled
+      #         Transitions:
+      #           -
+      #             StorageClass: GLACIER
+      #             TransitionInDays: 30
+      # LoggingConfiguration:
+      #   DestinationBucketName: !Ref StaticWebSiteLoggingBucket
+      #   LogFilePrefix: '/logs/website/'
+      # MetricsConfigurations:
+      #   - MetricsConfiguration
+      # NotificationConfiguration:
+      #   TopicConfigurations:
+      #     -
+      #       Event: s3:ObjectCreated:*
+      #       Topic: !Ref UpdateSNSTopic
+      # ObjectLockConfiguration:
+      #   ObjectLockConfiguration
+      # ObjectLockEnabled: Boolean
+      # OwnershipControls:
+      #   OwnershipControls
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      # ReplicationConfiguration:
+      #   ReplicationConfiguration
+      Tags:
+        - Key: ServiceName
+          Value: !Ref ServiceName
+        - Key: StackName
+          Value: !Ref AWS::StackName
+        - Key: ResourceType
+          Value: !Ref ResourceType
+      # VersioningConfiguration:
+      #   VersioningConfiguration
+      # WebsiteConfiguration:
+      #   IndexDocument: index.html
+        # ErrorDocument: error.html
+        # RoutingRules:
+        #   - RoutingRuleCondition:
+        #       HttpErrorCodeReturnedEquals: '404'
+        #       KeyPrefixEquals: out1/
+        #     RedirectRule:
+        #       HostName: ec2-11-22-333-44.compute-1.amazonaws.com
+        #       ReplaceKeyPrefixWith: report-404/
+
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3-policy.html
+  # https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteAccessPermissionsReqd.html
+  PSEEFinalXMLBucketPolicy:
+    Type: 'AWS::S3::BucketPolicy'
+    Properties:
+      Bucket: !Ref PSEEFinalXMLBucket
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: 'AllowCloudFrontServicePrincipalReadOnly'
+            Effect: 'Allow'
+            Principal:
+              Service: 'cloudfront.amazonaws.com'
+            Action: 's3:GetObject'
+            Resource: !Sub 'arn:${AWS::Partition}:s3:::${PSEEFinalXMLBucket}/*'
+            Condition:
+              StringEquals:
+                'AWS:SourceArn': !Sub 'arn:${AWS::Partition}:cloudfront::${AWS::AccountId}:distribution/${PSEECloudFrontDistribution}'
+          # - Sid: 'AllowLegacyOAIReadOnly'
+          #   Effect: 'Allow'
+          #   Principal:
+          #     AWS: !Sub 'arn:${AWS::Partition}:iam::cloudfront:user/CloudFront Origin Access Identity ${PSEECloudFrontOriginAccessIdentity}'
+          #   Action: 's3:GetObject'
+          #   Resource: !Sub 'arn:${AWS::Partition}:s3:::${PSEEFinalXMLBucket}/*'
+
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3-bucket.html
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3-bucket-publicaccessblockconfiguration.html
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3-bucket-websiteconfiguration.html
+  PSEECloudFrontLogBucket:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Delete
+    Properties:
+      # AccelerateConfiguration: AccelerateConfiguration
+      AccessControl: BucketOwnerFullControl
+      # AnalyticsConfigurations:
+      #   - AnalyticsConfiguration
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      # BucketName: !Sub ${ServiceName}-${AWS::AccountId}-website
+      # CorsConfiguration:
+      #   CorsConfiguration
+      # IntelligentTieringConfigurations:
+      #   - IntelligentTieringConfiguration
+      # InventoryConfigurations:
+      #   - InventoryConfiguration
+      # LifecycleConfiguration:
+      #   Rules:
+      #       -
+      #         AbortIncompleteMultipartUpload:
+      #           DaysAfterInitiation: 7
+      #         Status: Enabled
+      #         Transitions:
+      #           -
+      #             StorageClass: GLACIER
+      #             TransitionInDays: 30
+      # LoggingConfiguration:
+      #   DestinationBucketName: !Ref StaticWebSiteLoggingBucket
+      #   LogFilePrefix: '/logs/website/'
+      MetricsConfigurations:
+        - Id: EntireBucket
+      # NotificationConfiguration:
+      #   TopicConfigurations:
+      #     -
+      #       Event: s3:ObjectCreated:*
+      #       Topic: !Ref UpdateSNSTopic
+      # ObjectLockConfiguration:
+      #   ObjectLockConfiguration
+      # ObjectLockEnabled: Boolean
+      # OwnershipControls:
+      #   OwnershipControls
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      # ReplicationConfiguration:
+      #   ReplicationConfiguration
+      Tags:
+        - Key: ServiceName
+          Value: !Ref ServiceName
+        - Key: StackName
+          Value: !Ref AWS::StackName
+        - Key: ResourceType
+          Value: !Ref ResourceType
+      # VersioningConfiguration:
+      #   VersioningConfiguration
+      # WebsiteConfiguration:
+      #   IndexDocument: index.html
+        # ErrorDocument: error.html
+        # RoutingRules:
+        #   - RoutingRuleCondition:
+        #       HttpErrorCodeReturnedEquals: '404'
+        #       KeyPrefixEquals: out1/
+        #     RedirectRule:
+        #       HostName: ec2-11-22-333-44.compute-1.amazonaws.com
+        #       ReplaceKeyPrefixWith: report-404/
+
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3-policy.html
+  PSEECloudFrontLogBucketPolicy:
+    Type: 'AWS::S3::BucketPolicy'
+    Properties:
+      Bucket: !Ref PSEECloudFrontLogBucket
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: LoggingBucketPermissions
+            Effect: 'Allow'
+            Principal:
+              AWS: !Sub 'arn:aws:iam::${AWS::AccountId}:root'
+            Action: 's3:PutObject'
+            Resource:
+              - !Sub 'arn:aws:s3:::${PSEECloudFrontLogBucket}/AWSLogs/${AWS::AccountId}/*'
+
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-cloudfront-originaccesscontrol.html
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-cloudfront-originaccesscontrol-originaccesscontrolconfig.html
+  # https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-restricting-access-to-s3.html
+  # https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-restricting-access-to-origin.html
+  PSEECloudFrontOriginAccessControl:
+    Type: AWS::CloudFront::OriginAccessControl
+    Properties:
+      OriginAccessControlConfig:
+        Description: pwshEmojiExplorer CloudFront Origin Access Control
+        Name: psee-origin-access-control
+        OriginAccessControlOriginType: s3
+        SigningBehavior: always
+        SigningProtocol: sigv4
+
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-cloudfront-PSEECloudFrontOriginAccessIdentity.html
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-cloudfront-PSEECloudFrontOriginAccessIdentity-PSEECloudFrontOriginAccessIdentityconfig.html
+  # PSEECloudFrontOriginAccessIdentity:
+  #   Type: "AWS::CloudFront::CloudFrontOriginAccessIdentity"
+  #   Properties:
+  #     CloudFrontOriginAccessIdentityConfig:
+  #       Comment: !Ref PSEEFinalXMLBucket
+
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-cloudfront-distribution.html
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-cloudfront-distribution-distributionconfig.html
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-cloudfront-distribution-defaultcachebehavior.html
+  # https://github.com/aws-samples/cloudfront-authorization-at-edge/blob/master/template.yaml
+  # https://hackernoon.com/how-to-configure-cloudfront-using-cloudformation-template-2c263u56
+  PSEECloudFrontDistribution:
+    Type: "AWS::CloudFront::Distribution"
+    Properties:
+      DistributionConfig:
+        # Aliases:
+        #   - String
+        # CacheBehaviors:
+        #   - CacheBehavior
+        # CNAMEs:
+        #   - String
+        Comment: 'pwshEmojiExplorer CloudFront for PowerShell Cloud XML'
+        # CustomErrorResponses:
+        #   - ErrorCode: 403 # not found
+        #     ResponseCode: 404
+        #     ResponsePagePath: "/index.html"
+        # CustomOrigin:
+        #   LegacyCustomOrigin
+        DefaultCacheBehavior:
+          AllowedMethods:
+            - GET
+            - HEAD
+            # - OPTIONS
+          CachedMethods:
+            - GET
+            - HEAD
+            # - OPTIONS
+          # CachePolicyId: String
+          Compress: true
+          DefaultTTL: 3600 # in seconds
+          # FieldLevelEncryptionId: String
+          ForwardedValues:
+            Cookies:
+              Forward: none
+            QueryString: false
+          # FunctionAssociations:
+          #   - FunctionAssociation
+          # LambdaFunctionAssociations:
+          #   - LambdaFunctionAssociation
+          MaxTTL: 86400 # in seconds
+          MinTTL: 60 # in seconds
+          # OriginRequestPolicyId: String
+          # RealtimeLogConfigArn: String
+          # ResponseHeadersPolicyId: String
+          # SmoothStreaming: Boolean
+          TargetOriginId: s3origin
+          # TrustedKeyGroups:
+          #   - String
+          # TrustedSigners:
+          #   - String
+          ViewerProtocolPolicy: 'https-only'
+        # DefaultRootObject: 'index.html'
+        Enabled: true
+        HttpVersion: http2
+        # IPV6Enabled: Boolean
+        Logging:
+          Bucket: !Sub ${PSEECloudFrontLogBucket}.s3.amazonaws.com
+          # IncludeCookies: Boolean
+          Prefix: pwshcloudcommands
+        # OriginGroups:
+        #   OriginGroups
+        Origins:
+          - Id: s3origin
+            DomainName: !GetAtt PSEEFinalXMLBucket.DomainName
+            S3OriginConfig:
+              OriginAccessIdentity: ''
+            OriginAccessControlId: !GetAtt PSEECloudFrontOriginAccessControl.Id
+          # - DomainName: !GetAtt "PSEEFinalXMLBucket.DomainName"
+          #   Id: s3origin
+          #   S3OriginConfig:
+          #     OriginAccessIdentity: !Sub "origin-access-identity/cloudfront/${PSEECloudFrontOriginAccessIdentity}"
+        PriceClass: PriceClass_100
+        # Restrictions:
+        #   Restrictions
+        # S3Origin:
+        #   LegacyS3Origin
+        # ViewerCertificate:
+        #   ViewerCertificate
+        # WebACLId: String
+      Tags:
+        - Key: ServiceName
+          Value: !Ref ServiceName
+        - Key: StackName
+          Value: !Ref AWS::StackName
+        - Key: ResourceType
+          Value: !Ref ResourceType
+
+Outputs:
+  PSEEFinalXMLBucketName:
+    Description: Name of the PSEEFinalXMLBucket Amazon S3 bucket
+    Value: !Ref PSEEFinalXMLBucket
+    Export:
+      Name: !Sub ${ServiceName}-PSEEFinalXMLBucket
+
+  PSEEFinalXMLBucketARN:
+    Description: ARN of the PSEEFinalXMLBucket Amazon S3 bucket
+    Value: !GetAtt PSEEFinalXMLBucket.Arn
+    Export:
+      Name: !Sub ${ServiceName}-PSEEFinalXMLBucketARN
+
+  PSEECloudFrontLogBucketARN:
+    Description: ARN of the PSEECloudFrontLogBucket Amazon S3 bucket
+    Value: !GetAtt PSEECloudFrontLogBucket.Arn
+    Export:
+      Name: !Sub ${ServiceName}-PSEECloudFrontLogBucketARN
+
+  PSEECloudFrontDistributionDomain:
+    Description: The domain of the PSEECloudFrontDistribution
+    Value: !GetAtt PSEECloudFrontDistribution.DomainName
+    Export:
+      Name: !Sub ${ServiceName}-PSEECloudFrontDistributionDomain
