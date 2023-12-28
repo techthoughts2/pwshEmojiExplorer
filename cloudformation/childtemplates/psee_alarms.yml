@@ -94,7 +94,7 @@ Resources:
           Type: Schedule
           Properties:
             Enabled: true
-            Schedule: rate(1 week)
+            Schedule: rate(7 days)
       Timeout: 60
 
   #https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-logs-loggroup.html
