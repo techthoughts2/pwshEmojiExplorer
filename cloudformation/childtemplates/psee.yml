@@ -164,8 +164,9 @@ Resources:
       # ObjectLockConfiguration:
       #   ObjectLockConfiguration
       # ObjectLockEnabled: Boolean
-      # OwnershipControls:
-      #   OwnershipControls
+      OwnershipControls:
+        Rules:
+          - ObjectOwnership: BucketOwnerPreferred
       PublicAccessBlockConfiguration:
         BlockPublicAcls: true
         BlockPublicPolicy: true
