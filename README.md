@@ -1,0 +1,2 @@
+# pwshEmojiExplorer
+tbd
