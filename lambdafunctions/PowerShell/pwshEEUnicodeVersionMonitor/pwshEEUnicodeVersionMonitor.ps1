@@ -214,4 +214,69 @@ catch {
 
 #endregion
 
+#region version difference calculation
+
+# convert both string versions to format we can use for comparison
+$versionProper = [System.Version]$version
+$currentVersionProper = [System.Version]$currentVersion
+
+# Compare each component of the version
+$majorDifference = $versionProper.Major - $currentVersionProper.Major
+$minorDifference = $versionProper.Minor - $currentVersionProper.Minor
+$buildDifference = $versionProper.Build - $currentVersionProper.Build
+$revisionDifference = $versionProper.Revision - $currentVersionProper.Revision
+
+# Output the differences
+Write-Host ('Major version difference: {0}' -f $majorDifference)
+Write-Host ('Minor version difference: {0}' -f $minorDifference)
+Write-Host ('Build version difference: {0}' -f $buildDifference)
+Write-Host ('Revision version difference: {0}' -f $revisionDifference)
+
+# Overall comparison
+$metricDifference = 0
+if ($versionProper -gt $currentVersionProper) {
+    Write-Host ('Available version ({0}) is newer than the current version ({1})' -f $version, $currentVersion)
+    $metricDifference = 1
+}
+elseif ($versionProper -lt $currentVersionProper) {
+    Write-Host ('Current version ({0}) is newer than the available version ({1})' -f $currentVersion, $version)
+}
+else {
+    Write-Host ('Current version ({0}) is the same as the available version ({1})' -f $currentVersion, $version)
+}
+
+# Create a MetricDatum .NET object
+$MetricDatum2 = [Amazon.CloudWatch.Model.MetricDatum]::new()
+$MetricDatum2.MetricName = 'UnicodeEmojiVersionDifference'
+$MetricDatum2.Value = $metricDifference
+
+# Create a Dimension .NET object
+$Dimension2 = [Amazon.CloudWatch.Model.Dimension]::new()
+$Dimension2.Name = 'UnicodeEmojiVersionCheck'
+$Dimension2.Value = 'VersionDifference'
+
+# Assign the Dimension object to the MetricDatum's Dimensions property
+$MetricDatum2.Dimensions = $Dimension2
+
+$Namespace = 'UnicodeEmoji'
+
+try {
+
+    # Write the metric data to the CloudWatch service
+    $writeCWMetricDataSplat = @{
+        Namespace   = $Namespace
+        MetricData  = $MetricDatum2
+        ErrorAction = 'Stop'
+    }
+    Write-CWMetricData @writeCWMetricDataSplat
+}
+catch {
+    $errorMessage = $_.Exception.Message
+    Write-Error -Message ('Something went wrong: {0}' -f $errorMessage)
+    Send-TelegramMessage -Message '\\\ Project pwshEmojiExplorer - Error sending VersionDifference metric data to CloudWatch'
+}
+
+
+#endregion
+
 return $true

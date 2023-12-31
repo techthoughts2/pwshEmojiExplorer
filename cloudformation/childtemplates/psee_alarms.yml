@@ -123,63 +123,29 @@ Resources:
       AlarmActions:
         - !ImportValue AlertSNSTopic
       AlarmDescription: Alarm when the current version is below the available version.
-      AlarmName: pwshEEUnicodeVersionComparisonAlarm
-      ComparisonOperator: LessThanThreshold
-      # DatapointsToAlarm: Integer
+      AlarmName: pwshEEUnicodeVersionUpdateRequired
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      DatapointsToAlarm: 1
       # EvaluateLowSampleCountPercentile: String
       Dimensions:
-        - Name: UnicodeEmoji
-          Value: LatestVersion
-        - Name: UnicodeEmoji
-          Value: CurrentVersion
+        - Name: UnicodeEmojiVersionCheck
+          Value: VersionDifference
       EvaluationPeriods: 1
       # ExtendedStatistic: String
       # InsufficientDataActions:
       #   - String
-      MetricName: UnicodeEmojiVersion
+      MetricName: UnicodeEmojiVersionDifference
       # Metrics:
       #   - MetricDataQuery
       Namespace: UnicodeEmoji
       # OKActions:
       #   - String
-      Period: 86400 # 24 hours in seconds
+      Period: 3600
       Statistic: Maximum
-      Threshold: 0
+      Threshold: 1
       # ThresholdMetricId: String
-      TreatMissingData: missing
+      TreatMissingData: notBreaching
       # Unit: String
-
-  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-cw-alarm.html
-  # pwshEEUnicodeVersionMonitorAlarm:
-  #   Type: AWS::CloudWatch::Alarm
-  #   Properties:
-  #     ActionsEnabled: true
-  #     AlarmActions:
-  #       - !ImportValue AlertSNSTopic
-  #     AlarmDescription: Alarms if the PubXML file is more than 8 days old.
-  #     AlarmName: pwshEEUnicodeVersionMonitor
-  #     ComparisonOperator: GreaterThanOrEqualToThreshold
-  #     # DatapointsToAlarm: Integer
-  #     # EvaluateLowSampleCountPercentile: String
-  #     Dimensions:
-  #       - Name: PubXML
-  #         Value: DaysOld
-  #     EvaluationPeriods: 1
-  #     # ExtendedStatistic: String
-  #     # InsufficientDataActions:
-  #     #   - String
-  #     MetricName: PubXMLAge
-  #     # Metrics:
-  #     #   - MetricDataQuery
-  #     Namespace: pwshEmojiExplorer
-  #     # OKActions:
-  #     #   - String
-  #     Period: 3600
-  #     Statistic: Maximum
-  #     Threshold: 8
-  #     # ThresholdMetricId: String
-  #     TreatMissingData: notBreaching
-  #     # Unit: String
 
   # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-cloudwatch-dashboard.html
   # pwshEEUnicodeVersionMonitorDashboard:
@@ -281,8 +247,8 @@ Outputs:
     Export:
       Name: !Sub ${ServiceName}-pwshEEUnicodeVersionMonitorARN
 
-  # pwshEEUnicodeVersionMonitorAlarmARN:
-  #   Description: PubXMLMonitorAlarm Alarm ARN
-  #   Value: !GetAtt pwshEEUnicodeVersionMonitorAlarm.Arn
-  #   Export:
-  #     Name: !Sub ${ServiceName}-pwshEEUnicodeVersionMonitorAlarmARN
+  pwshEEUnicodeVersionComparisonAlarmARN:
+    Description: PubXMLMonitorAlarm Alarm ARN
+    Value: !GetAtt pwshEEUnicodeVersionComparisonAlarm.Arn
+    Export:
+      Name: !Sub ${ServiceName}-pwshEEUnicodeVersionComparisonAlarmARN
