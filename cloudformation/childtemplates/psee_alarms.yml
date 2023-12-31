@@ -116,6 +116,40 @@ Resources:
           Value: !Ref ResourceType
 
   # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-cw-alarm.html
+  pwshEEUnicodeVersionComparisonAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      ActionsEnabled: true
+      AlarmActions:
+        - !ImportValue AlertSNSTopic
+      AlarmDescription: Alarm when the current version is below the available version.
+      AlarmName: pwshEEUnicodeVersionComparisonAlarm
+      ComparisonOperator: LessThanThreshold
+      # DatapointsToAlarm: Integer
+      # EvaluateLowSampleCountPercentile: String
+      Dimensions:
+        - Name: UnicodeEmoji
+          Value: LatestVersion
+        - Name: UnicodeEmoji
+          Value: CurrentVersion
+      EvaluationPeriods: 1
+      # ExtendedStatistic: String
+      # InsufficientDataActions:
+      #   - String
+      MetricName: UnicodeEmojiVersion
+      # Metrics:
+      #   - MetricDataQuery
+      Namespace: UnicodeEmoji
+      # OKActions:
+      #   - String
+      Period: 86400 # 24 hours in seconds
+      Statistic: Maximum
+      Threshold: 0
+      # ThresholdMetricId: String
+      TreatMissingData: missing
+      # Unit: String
+
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-cw-alarm.html
   # pwshEEUnicodeVersionMonitorAlarm:
   #   Type: AWS::CloudWatch::Alarm
   #   Properties:

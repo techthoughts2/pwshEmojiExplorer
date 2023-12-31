@@ -73,6 +73,8 @@ function Send-TelegramMessage {
 
 #endregion
 
+#region unicode version
+
 # Define the URL
 $url = 'https://unicode.org/Public/emoji/latest/ReadMe.txt'
 
@@ -98,6 +100,19 @@ if ([string]::IsNullOrWhiteSpace($version) -or $version -notmatch '\d+\.\d+') {
 }
 else {
     Write-Host ('Version number is {0}' -f $version)
+}
+
+if ($version -like '*Public*' -or $version -like '*emoji*') {
+    # extract the version number from the string
+    # sample: Public/emoji/15.1
+    $version = $version.Split('/')[2]
+}
+
+# verify that the version is in the expected format
+if ($version -notmatch '\d+\.\d+') {
+    Write-Warning -Message 'Error parsing version number'
+    Send-TelegramMessage -Message '\\\ Project pwshEmojiExplorer - Error parsing version number'
+    return
 }
 
 # Create a MetricDatum .NET object
@@ -130,5 +145,73 @@ catch {
     Write-Error -Message ('Something went wrong: {0}' -f $errorMessage)
     Send-TelegramMessage -Message '\\\ Project pwshEmojiExplorer - Error sending metric data to CloudWatch'
 }
+
+#endregion
+
+#region current version
+
+# download the current version from S3 to lambda temp
+$key = 'version.json'
+$file = "$env:TEMP\$key"
+$readS3ObjectSplat = @{
+    BucketName  = $env:S3_BUCKET_NAME
+    Key         = $key
+    File        = $file
+    ErrorAction = 'Stop'
+}
+try {
+    Read-S3Object @readS3ObjectSplat
+}
+catch {
+    $errorMessage = $_.Exception.Message
+    Write-Error -Message ('Something went wrong: {0}' -f $errorMessage)
+    Send-TelegramMessage -Message '\\\ Project pwshEmojiExplorer - Error downloading version file from S3'
+}
+# read the file
+$versionFile = Get-Content -Path $file -Raw
+# convert from json
+$versionJson = $versionFile | ConvertFrom-Json
+# get the version
+$currentVersion = $versionJson.version
+
+# verify that the version is in the expected format
+if ($currentVersion -notmatch '\d+\.\d+') {
+    Write-Warning -Message 'Error parsing current version number'
+    Send-TelegramMessage -Message '\\\ Project pwshEmojiExplorer - Error parsing current version number'
+    return
+}
+
+# Create a MetricDatum .NET object
+$MetricDatum2 = [Amazon.CloudWatch.Model.MetricDatum]::new()
+$MetricDatum2.MetricName = 'UnicodeEmojiVersion'
+$MetricDatum2.Value = $version
+
+# Create a Dimension .NET object
+$Dimension2 = [Amazon.CloudWatch.Model.Dimension]::new()
+$Dimension2.Name = 'UnicodeEmoji'
+$Dimension2.Value = 'CurrentVersion'
+
+# Assign the Dimension object to the MetricDatum's Dimensions property
+$MetricDatum2.Dimensions = $Dimension2
+
+$Namespace = 'UnicodeEmoji'
+
+try {
+
+    # Write the metric data to the CloudWatch service
+    $writeCWMetricDataSplat = @{
+        Namespace   = $Namespace
+        MetricData  = $MetricDatum2
+        ErrorAction = 'Stop'
+    }
+    Write-CWMetricData @writeCWMetricDataSplat
+}
+catch {
+    $errorMessage = $_.Exception.Message
+    Write-Error -Message ('Something went wrong: {0}' -f $errorMessage)
+    Send-TelegramMessage -Message '\\\ Project pwshEmojiExplorer - Error sending CurrentVersion metric data to CloudWatch'
+}
+
+#endregion
 
 return $true
