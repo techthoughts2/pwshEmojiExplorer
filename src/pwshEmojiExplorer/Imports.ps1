@@ -22,7 +22,7 @@ $target = 'd1nm4o1hreod3r'
 Get-DataLocation
 $script:dataFileZip = 'pwshemojis.zip'
 $script:metadataFile = 'version.json'
-$script:dataFile = 'pwshemoji.xml'
+$script:dataFile = 'pwshEmoji.xml'
 $script:dlURI = '{0}.{1}' -f $target, $domain
 $script:glData = $null
 
