@@ -7,32 +7,15 @@
 [psgallery-v1]:    https://www.powershellgallery.com/packages/pwshEmojiExplorer/0.8.1
 [license-badge]:   https://img.shields.io/github/license/techthoughts2/pwshEmojiExplorer
 
-Branch | Windows - PowerShell | Windows - pwsh | Linux | MacOS
---- | --- | --- | --- | --- |
-main | [![Build Status Windows PowerShell main](https://github.com/techthoughts2/pwshEmojiExplorer/actions/workflows/wf_Windows.yml/badge.svg?branch=main)](https://github.com/techthoughts2/pwshEmojiExplorer/actions/workflows/wf_Windows.yml) | [![Build Status Windows pwsh main](https://github.com/techthoughts2/pwshEmojiExplorer/actions/workflows/wf_Windows_Core.yml/badge.svg?branch=main)](https://github.com/techthoughts2/pwshEmojiExplorer/actions/workflows/wf_Windows_Core.yml) | [![Build Status Linux main](https://github.com/techthoughts2/pwshEmojiExplorer/actions/workflows/wf_Linux.yml/badge.svg?branch=main)](https://github.com/techthoughts2/pwshEmojiExplorer/actions/workflows/wf_Linux.yml) | [![Build Status MacOS main](https://github.com/techthoughts2/pwshEmojiExplorer/actions/workflows/wf_MacOS.yml/badge.svg?branch=main)](https://github.com/techthoughts2/pwshEmojiExplorer/actions/workflows/wf_MacOS.yml)
-Enhancements | [![Build Status Windows PowerShell Enhancements](https://github.com/techthoughts2/pwshEmojiExplorer/actions/workflows/wf_Windows.yml/badge.svg?branch=Enhancements)](https://github.com/techthoughts2/pwshEmojiExplorer/actions/workflows/wf_Windows.yml) | [![Build Status Windows pwsh Enhancements](https://github.com/techthoughts2/pwshEmojiExplorer/actions/workflows/wf_Windows_Core.yml/badge.svg?branch=Enhancements)](https://github.com/techthoughts2/pwshEmojiExplorer/actions/workflows/wf_Windows_Core.yml) | [![Build Status Linux Enhancements](https://github.com/techthoughts2/pwshEmojiExplorer/actions/workflows/wf_Linux.yml/badge.svg?branch=Enhancements)](https://github.com/techthoughts2/pwshEmojiExplorer/actions/workflows/wf_Linux.yml) | [![Build Status MacOS Enhancements](https://github.com/techthoughts2/pwshEmojiExplorer/actions/workflows/wf_MacOS.yml/badge.svg?branch=Enhancements)](https://github.com/techthoughts2/pwshEmojiExplorer/actions/workflows/wf_MacOS.yml)
-
-## Synopsis
+## What is pwshEmojiExplorer? 🤔
 
 pwshEmojiExplorer is a PowerShell module designed to enable users to search, discover, and retrieve emojis directly through the command line. Leveraging the extensive Unicode emoji library, the module offers a streamlined approach to exploring and integrating a vast range of emojis into various coding projects.
 
-## Description
+## Why pwshEmojiExplorer? ❔
 
 This PowerShell module simplifies the process of finding and using emojis by enabling direct command-line searches. It's not just about bringing emojis into PowerShell scripts; it's about providing a solution for handling emojis in various coding projects. Whether you need the HTMLEntityFormat for a web project, a Unicode representation for a text file, or the hex code for a development task, pwshEmojiExplorer provides this information quickly and efficiently. It's a tool for developers, scripters, and digital creators who seek to incorporate emojis into their work more effectively, enhancing the ease of access and use of emojis in diverse digital contexts.
 
-## Features
-
-- **Extensive Emoji Search**: Find emojis by name, category, code point, and more.
-- **Emoji Information Retrieval**: Get detailed information about each emoji, including different representations and formats.
-- **Text Enhancement**: Automatically enhance texts by adding or replacing words with emojis. Experimental, but perfect for adding a bit of fun to your scripts.
-- **Unicode Compliance**: Utilizes the Public data set from the Unicode Data Files, ensuring that you are working with officially recognized emoji standards and variations.
-- **Auto-updating**: Actively scans for updates in the Unicode data set and automatically upgrades to the latest published standard. This feature ensures you are aligned with the newest emoji releases and changes in the Unicode standard.
-
-## Getting Started
-
-### Documentation
-
-Documentation for pwshEmojiExplorer is available at: [https://pwshEmojiExplorer.readthedocs.io](https://pwshEmojiExplorer.readthedocs.io)
+## Getting Started 💻
 
 ### Installation
 
@@ -77,14 +60,12 @@ Add-EmojiToText -Text $sampleText
 #-------------------------------------------------------------------------------------
 ```
 
-## Notes
+## How pwshEmojiExplorer Works
 
-This PowerShell project was created with [Catesta](https://github.com/techthoughts2/Catesta).
+## Features
 
-## Contributing
-
-If you'd like to contribute to pwshEmojiExplorer, please see the [contribution guidelines](.github/CONTRIBUTING.md).
-
-## License
-
-This project is [licensed under the MIT License](LICENSE).
+- **Extensive Emoji Search**: Find emojis by name, category, code point, and more.
+- **Emoji Information Retrieval**: Get detailed information about each emoji, including different representations and formats.
+- **Text Enhancement**: Automatically enhance texts by adding or replacing words with emojis. Experimental, but perfect for adding a bit of fun to your scripts.
+- **Unicode Compliance**: Utilizes the Public data set from the Unicode Data Files, ensuring that you are working with officially recognized emoji standards and variations.
+- **Auto-updating**: Actively scans for updates in the Unicode data set and automatically upgrades to the latest published standard. This feature ensures you are aligned with the newest emoji releases and changes in the Unicode standard.
