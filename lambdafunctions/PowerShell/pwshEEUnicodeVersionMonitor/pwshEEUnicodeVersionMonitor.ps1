@@ -114,6 +114,7 @@ if ($version -notmatch '\d+\.\d+') {
     Send-TelegramMessage -Message '\\\ Project pwshEmojiExplorer - Error parsing version number'
     return
 }
+Write-Host ('Final Version number is {0}' -f $version)
 
 # Create a MetricDatum .NET object
 $MetricDatum = [Amazon.CloudWatch.Model.MetricDatum]::new()
@@ -130,6 +131,7 @@ $MetricDatum.Dimensions = $Dimension
 
 $Namespace = 'UnicodeEmoji'
 
+Write-Host ('Sending LatestVersion metric data to CloudWatch')
 try {
 
     # Write the metric data to the CloudWatch service
@@ -151,8 +153,10 @@ catch {
 #region current version
 
 # download the current version from S3 to lambda temp
+
 $key = 'version.json'
-$file = "$env:TEMP\$key"
+$file = "/tmp/$key"
+Write-Host ('Downloading {0} from S3 to {1}' -f $key, $file)
 $readS3ObjectSplat = @{
     BucketName  = $env:S3_BUCKET_NAME
     Key         = $key
@@ -196,6 +200,7 @@ $MetricDatum2.Dimensions = $Dimension2
 
 $Namespace = 'UnicodeEmoji'
 
+Write-Host ('Sending CurrentVersion metric data to CloudWatch')
 try {
 
     # Write the metric data to the CloudWatch service
@@ -260,6 +265,7 @@ $MetricDatum2.Dimensions = $Dimension2
 
 $Namespace = 'UnicodeEmoji'
 
+Write-Host ('Sending VersionDifference metric data to CloudWatch')
 try {
 
     # Write the metric data to the CloudWatch service
@@ -275,7 +281,6 @@ catch {
     Write-Error -Message ('Something went wrong: {0}' -f $errorMessage)
     Send-TelegramMessage -Message '\\\ Project pwshEmojiExplorer - Error sending VersionDifference metric data to CloudWatch'
 }
-
 
 #endregion
 
