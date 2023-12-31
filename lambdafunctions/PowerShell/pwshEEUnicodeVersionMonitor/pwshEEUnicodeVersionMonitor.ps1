@@ -178,6 +178,8 @@ $versionJson = $versionFile | ConvertFrom-Json
 # get the version
 $currentVersion = $versionJson.version
 
+Write-Host ('Current version is {0}' -f $currentVersion)
+
 # verify that the version is in the expected format
 if ($currentVersion -notmatch '\d+\.\d+') {
     Write-Warning -Message 'Error parsing current version number'
@@ -188,7 +190,7 @@ if ($currentVersion -notmatch '\d+\.\d+') {
 # Create a MetricDatum .NET object
 $MetricDatum2 = [Amazon.CloudWatch.Model.MetricDatum]::new()
 $MetricDatum2.MetricName = 'UnicodeEmojiVersion'
-$MetricDatum2.Value = $version
+$MetricDatum2.Value = $currentVersion
 
 # Create a Dimension .NET object
 $Dimension2 = [Amazon.CloudWatch.Model.Dimension]::new()
