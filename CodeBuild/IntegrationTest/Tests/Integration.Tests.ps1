@@ -18,52 +18,42 @@ Describe -Name 'Infrastructure Tests' -Fixture {
         $script:AWSAccountID = $env:AWS_ACCOUNTID
     } #before_all
 
-    Context -Name 'pscc.yml' -Fixture {
+    Context -Name 'psee.yml' -Fixture {
 
-        It -Name 'Should create a PSCCFinalXMLBucketARN' -Test {
-            $assertion = ($cfnExports | Where-Object { $_.Name -eq "$ServiceName-PSCCFinalXMLBucketARN" }).Value
+        It -Name 'Should create a PSEEFinalXMLBucketARN' -Test {
+            $assertion = ($cfnExports | Where-Object { $_.Name -eq "$ServiceName-PSEEFinalXMLBucketARN" }).Value
             $expected = 'arn:aws:s3::*'
             $assertion | Should -BeLike $expected
         } #it
 
-        It -Name 'Should create a PSCCCloudFrontLogBucketARN' -Test {
-            $assertion = ($cfnExports | Where-Object { $_.Name -eq "$ServiceName-PSCCCloudFrontLogBucketARN" }).Value
+        It -Name 'Should create a PSEECloudFrontLogBucketARN' -Test {
+            $assertion = ($cfnExports | Where-Object { $_.Name -eq "$ServiceName-PSEECloudFrontLogBucketARN" }).Value
             $expected = 'arn:aws:s3::*'
             $assertion | Should -BeLike $expected
         } #it
 
         It -Name 'Should create a CloudFront distribution' -Test {
-            $assertion = ($cfnExports | Where-Object { $_.Name -eq "$ServiceName-PSCCCloudFrontDistributionDomain" }).Value
+            $assertion = ($cfnExports | Where-Object { $_.Name -eq "$ServiceName-PSEECloudFrontDistributionDomain" }).Value
             $expected = '*.cloudfront.net'
             $assertion | Should -BeLike $expected
         } #it
 
-    } #context_pscc.yml
+    } #context_psee.yml
 
-    Context -Name 'pscc_ssm.yml' -Fixture {
+    Context -Name 'psee_alarms.yml' -Fixture {
 
-        It -Name 'Should create a SSM Maintenance Window' -Test {
-            $assertion = ($cfnExports | Where-Object { $_.Name -eq "$ServiceName-PSCCMaintWindowID" }).Value
-            $expected = 'mw-*'
-            $assertion | Should -BeLike $expected
-        } #it
-
-    } #context_pscc_ssm.yml
-
-    Context -Name 'pscc_alarms.yml' -Fixture {
-
-        It -Name 'Should create a pwshCCPubXMLMonitorAlarmARN' -Test {
-            $assertion = ($cfnExports | Where-Object { $_.Name -eq "$ServiceName-pwshCCPubXMLMonitorAlarmARN" }).Value
+        It -Name 'Should create a pwshEEPubXMLMonitorAlarmARN' -Test {
+            $assertion = ($cfnExports | Where-Object { $_.Name -eq "$ServiceName-pwshEEUnicodeVersionComparisonAlarmARN" }).Value
             $expected = 'arn:aws:cloudwatch:*'
             $assertion | Should -BeLike $expected
         } #it
 
-        It -Name 'Should create a pwshCCPubXMLMonitorARN' -Test {
-            $assertion = ($cfnExports | Where-Object { $_.Name -eq "$ServiceName-pwshCCPubXMLMonitorARN" }).Value
+        It -Name 'Should create a pwshEEUnicodeVersionMonitorARN' -Test {
+            $assertion = ($cfnExports | Where-Object { $_.Name -eq "$ServiceName-pwshEEUnicodeVersionMonitorARN" }).Value
             $expected = 'arn:aws:lambda:*'
             $assertion | Should -BeLike $expected
         } #it
 
-    } #context_pscc_alarms.yml
+    } #context_psee_alarms.yml
 
 } #describe_infra_tests
