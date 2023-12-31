@@ -148,97 +148,115 @@ Resources:
       # Unit: String
 
   # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-cloudwatch-dashboard.html
-  # pwshEEUnicodeVersionMonitorDashboard:
-  #   Type: AWS::CloudWatch::Dashboard
-  #   Properties:
-  #     DashboardName: !Sub '${ServiceName}-pwshEEUnicodeVersionMonitorDashboard'
-  #     DashboardBody: !Sub |
-  #       {
-  #         "widgets": [
-  #             {
-  #                 "height": 12,
-  #                 "width": 7,
-  #                 "y": 0,
-  #                 "x": 0,
-  #                 "type": "metric",
-  #                 "properties": {
-  #                     "metrics": [
-  #                         [
-  #                             "pwshEmojiExplorer",
-  #                             "PubXMLAge",
-  #                             "PubXML",
-  #                             "DaysOld",
-  #                             {
-  #                                 "region": "us-west-2",
-  #                                 "label": "Data Cache Age (Days)"
-  #                             }
-  #                         ]
-  #                     ],
-  #                     "view": "timeSeries",
-  #                     "stacked": false,
-  #                     "region": "us-west-2",
-  #                     "period": 86400,
-  #                     "stat": "Maximum",
-  #                     "start": "-P90D",
-  #                     "end": "P0D",
-  #                     "annotations": {
-  #                         "horizontal": [
-  #                             {
-  #                                 "label": "Cache > 8 Days",
-  #                                 "value": 8
-  #                             }
-  #                         ]
-  #                     },
-  #                     "yAxis": {
-  #                         "left": {
-  #                             "label": "Days Old",
-  #                             "min": 0
-  #                         },
-  #                         "right": {
-  #                             "label": "Date"
-  #                         }
-  #                     },
-  #                     "title": "pwshEmojiExplorer Data Cache Age Metric"
-  #                 }
-  #             },
-  #             {
-  #                 "height": 12,
-  #                 "width": 6,
-  #                 "y": 0,
-  #                 "x": 7,
-  #                 "type": "metric",
-  #                 "properties": {
-  #                     "metrics": [
-  #                         [
-  #                             "AWS/CloudFront",
-  #                             "Requests",
-  #                             "Region",
-  #                             "Global",
-  #                             "DistributionId",
-  #                             "E2C5YCYVS84449",
-  #                             {
-  #                                 "region": "us-east-1"
-  #                             }
-  #                         ]
-  #                     ],
-  #                     "view": "timeSeries",
-  #                     "stacked": false,
-  #                     "region": "us-west-2",
-  #                     "period": 86400,
-  #                     "stat": "Sum",
-  #                     "start": "-P90D",
-  #                     "end": "P0D",
-  #                     "title": "Data Cache Download Requests",
-  #                     "yAxis": {
-  #                         "left": {
-  #                             "label": "Download Count",
-  #                             "min": 0
-  #                         }
-  #                     }
-  #                 }
-  #             }
-  #         ]
-  #       }
+  pwshEEUnicodeVersionMonitorDashboard:
+    Type: AWS::CloudWatch::Dashboard
+    Properties:
+      DashboardName: !Sub '${ServiceName}-pwshEEUnicodeVersionMonitorDashboard'
+      DashboardBody: !Sub |
+        {
+          "widgets": [
+              {
+                  "height": 11,
+                  "width": 11,
+                  "y": 0,
+                  "x": 11,
+                  "type": "metric",
+                  "properties": {
+                      "metrics": [
+                          [ "AWS/CloudFront", "Requests", "Region", "Global", "DistributionId", "EWQVHOCUIUKVH", { "region": "us-east-1" } ]
+                      ],
+                      "view": "timeSeries",
+                      "stacked": false,
+                      "region": "us-west-2",
+                      "period": 86400,
+                      "stat": "Sum",
+                      "start": "-P90D",
+                      "end": "P0D",
+                      "title": "Emoji Dataset Download Requests",
+                      "yAxis": {
+                          "left": {
+                              "label": "Download Count",
+                              "min": 0
+                          }
+                      }
+                  }
+              },
+              {
+                  "type": "metric",
+                  "x": 0,
+                  "y": 0,
+                  "width": 5,
+                  "height": 11,
+                  "properties": {
+                      "metrics": [
+                          [ "UnicodeEmoji", "UnicodeEmojiVersion", "UnicodeEmoji", "CurrentVersion", { "region": "us-west-2" } ],
+                          [ "...", "LatestVersion", { "color": "#69ae34", "region": "us-west-2" } ]
+                      ],
+                      "view": "timeSeries",
+                      "stacked": false,
+                      "region": "us-west-2",
+                      "stat": "Maximum",
+                      "start": "-P90D",
+                      "end": "P0D",
+                      "period": 86400,
+                      "title": "Unicode Version Number Comparison",
+                      "yAxis": {
+                          "left": {
+                              "label": "Version Number",
+                              "min": 0
+                          }
+                      }
+                  }
+              },
+              {
+                  "type": "alarm",
+                  "x": 5,
+                  "y": 0,
+                  "width": 5,
+                  "height": 2,
+                  "properties": {
+                      "title": "Version Update Alarm",
+                      "alarms": [
+                          "arn:aws:cloudwatch:us-west-2:699483786831:alarm:pwshEEUnicodeVersionUpdateRequired"
+                      ]
+                  }
+              },
+              {
+                  "type": "metric",
+                  "x": 5,
+                  "y": 2,
+                  "width": 6,
+                  "height": 9,
+                  "properties": {
+                      "metrics": [
+                          [ "UnicodeEmoji", "UnicodeEmojiVersionDifference", "UnicodeEmojiVersionCheck", "VersionDifference", { "region": "us-west-2", "color": "#f89256" } ]
+                      ],
+                      "view": "timeSeries",
+                      "stacked": false,
+                      "region": "us-west-2",
+                      "period": 86400,
+                      "stat": "Maximum",
+                      "start": "-P90D",
+                      "end": "P0D",
+                      "annotations": {
+                          "horizontal": [
+                              {
+                                  "label": "Alarm Threshold",
+                                  "value": 1
+                              }
+                          ]
+                      },
+                      "yAxis": {
+                          "left": {
+                              "label": "Version Update Detected",
+                              "min": 0
+                          }
+                      },
+                      "title": "Unicode Version Update Detection"
+                  }
+              }
+          ]
+        }
 
 Outputs:
   pwshEEUnicodeVersionMonitorARN:
