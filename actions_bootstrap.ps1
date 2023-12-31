@@ -23,6 +23,10 @@ $null = $modulesToInstall.Add(([PSCustomObject]@{
             ModuleName    = 'PSScriptAnalyzer'
             ModuleVersion = '1.21.0'
         }))
+$null = $modulesToInstall.Add(([PSCustomObject]@{
+            ModuleName    = 'Convert'
+            ModuleVersion = '1.5.0'
+        }))
 # https://github.com/PowerShell/platyPS
 # older version used due to: https://github.com/PowerShell/platyPS/issues/457
 $null = $modulesToInstall.Add(([PSCustomObject]@{
