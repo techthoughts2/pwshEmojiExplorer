@@ -13,12 +13,14 @@ on:
       - 'docs/**'
     branches-ignore:
       - 'pipeline'
+      - 'doctesting'
   push:
     paths-ignore:
       - '**.md'
       - 'docs/**'
     branches-ignore:
       - 'pipeline'
+      - 'doctesting'
 jobs:
   test:
     name: Run Tests
