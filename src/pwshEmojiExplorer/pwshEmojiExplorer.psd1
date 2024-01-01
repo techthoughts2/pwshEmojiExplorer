@@ -144,13 +144,13 @@
             )
 
             # A URL to the license for this module.
-            LicenseUri = 'https://github.com/techthoughts2/pwshEmojiExplorer/LICENSE'
+            LicenseUri = 'https://github.com/techthoughts2/pwshEmojiExplorer/blob/main/LICENSE'
 
             # A URL to the main website for this project.
             ProjectUri = 'https://github.com/techthoughts2/pwshEmojiExplorer'
 
             # A URL to an icon representing this module.
-            # IconUri = ''
+            IconUri    = 'https://github.com/techthoughts2/pwshEmojiExplorer/raw/main/docs/assets/pwshEmojiExplorer_icon.png'
 
             # ReleaseNotes of this module
             # ReleaseNotes = ''
