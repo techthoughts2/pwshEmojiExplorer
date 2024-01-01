@@ -11,6 +11,10 @@
 
 pwshEmojiExplorer is a PowerShell module designed to enable users to search, discover, and retrieve emojis directly through the command line. Leveraging the extensive Unicode emoji library, the module offers a streamlined approach to exploring and integrating a vast range of emojis into various coding projects.
 
+<p align="center">
+    <img src="assets/pwshEmojiExplorer.png" alt="pwshEmojiExplorer Logo" >
+</p>
+
 ## Why pwshEmojiExplorer? ❔
 
 This PowerShell module simplifies the process of finding and using emojis by enabling direct command-line searches. It's not just about bringing emojis into PowerShell scripts; it's about providing a solution for handling emojis in various coding projects. Whether you need the HTMLEntityFormat for a web project, a Unicode representation for a text file, or the hex code for a development task, pwshEmojiExplorer provides this information quickly and efficiently. It's a tool for developers, scripters, and digital creators who seek to incorporate emojis into their work more effectively, enhancing the ease of access and use of emojis in diverse digital contexts.

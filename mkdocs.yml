@@ -10,13 +10,13 @@
 
 site_name: pwshEmojiExplorer
 # site_url:
-# repo_url:
+repo_url: https://github.com/techthoughts2/pwshEmojiExplorer
 # repo_name:
 # edit_uri: edit/main/docs/
 # edit_uri_template:
 site_description: tbd # meta tag to the generated HTML header
-site_author: Jake # meta tag to the generated HTML header
-# copyright:
+site_author: Jake Morrison # meta tag to the generated HTML header
+copyright: "pwshEmojiExplorer is licensed under the <a href='https://github.com/techthoughts2/pwshEmojiExplorer/blob/main/LICENSE'>MIT license"
 # remote_branch:
 # remote_name:
 # docs_dir: docs
@@ -41,18 +41,18 @@ site_author: Jake # meta tag to the generated HTML header
 # extra:
 theme:
   name: material
-  # language: en
+  language: en
   # custom_dir: overrides
   features:
     # - navigation.tabs
     # - navigation.tabs.sticky
     # - navigation.path
-  # favicon:
+  favicon: assets/pwshEmojiExplorer_favicon_32x32.png
   # icon:
   #   repo:
   # font:
   #   text: Work Sans
-  # logo:
+  logo: assets/pwshEmojiExplorer_icon.png
   # palette:
   #   primary: teal
   # palette:
