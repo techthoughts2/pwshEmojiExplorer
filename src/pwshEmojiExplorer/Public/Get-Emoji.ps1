@@ -105,6 +105,7 @@ function Get-Emoji {
         [ArgumentCompleter({ GroupArgumentCompleter @args })]
         [string]$Group,
 
+        # * Note: ArgumentCompletions were used previously, but they are not supported in Windows PowerShell 5.1
         [Parameter(ParameterSetName = 'SubGroup',
             HelpMessage = 'Specifies the subgroup of emojis to retrieve')]
         [ArgumentCompleter({ SubgroupArgumentCompleter @args })]
@@ -122,7 +123,6 @@ function Get-Emoji {
 
         [Parameter(ParameterSetName = 'Decimal',
             HelpMessage = 'Specifies the decimal code point of the emoji to retrieve')]
-        # [ValidatePattern('^\d+(\s*,\s*\d+){0,4}$')]
         [ValidatePattern('^\d+$')]
         [string[]]$Decimal,
 
@@ -145,8 +145,16 @@ function Get-Emoji {
         $finalEmojiList = New-Object System.Collections.Generic.List[PSEmoji]
 
         if ($Emoji) {
+            # * Searching by HexCodePoint instead of Emoji character directly is supported in Windows PowerShell 5.1
+            # * This could be removed in the future if Windows PowerShell 5.1 is no longer supported
+            $searchCriteria = Convert-EmojiToHexCodePoint -Emoji $Emoji
             Write-Verbose -Message ('Searching for emoji: {0}' -f $Emoji)
-            $find = $dataSet | Where-Object { $_.Name -eq $Emoji }
+            Write-Debug -Message ('Searching for emoji with hex code point: {0}' -f $searchCriteria)
+            $find = $dataSet | Where-Object { $_.HexCodePoint -eq $searchCriteria }
+
+            # * This approach works in higher version of PowerShell, but not for Windows PowerShell 5.1 in all cases
+            # Write-Verbose -Message ('Searching for emoji: {0}' -f $Emoji)
+            # $find = $dataSet | Where-Object { $_.Name -eq $Emoji }
         }
         elseif ($Group) {
             Write-Verbose -Message ('Searching for emojis in group: {0}' -f $Group)

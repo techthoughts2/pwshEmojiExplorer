@@ -513,6 +513,11 @@ Add-BuildTask IntegrationTest {
         $pesterConfiguration.TestResult.Enabled = $false
         $pesterConfiguration.Output.Verbosity = 'Detailed'
 
+        # if PowerShell 5.1 - exclude pwshOnly tag
+        if ($PSVersionTable.PSVersion.Major -eq 5) {
+            $pesterConfiguration.Filter.ExcludeTag = 'pwshOnly'
+        }
+
         $testResults = Invoke-Pester -Configuration $pesterConfiguration
         # This will output a nice json for each failed test (if running in CodeBuild)
         if ($env:CODEBUILD_BUILD_ARN) {

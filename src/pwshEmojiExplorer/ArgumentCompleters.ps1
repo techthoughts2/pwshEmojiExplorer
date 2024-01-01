@@ -1,4 +1,9 @@
-﻿function GroupArgumentCompleter {
+﻿# Check if the PowerShell version is less than 6 (Windows PowerShell)
+if ($PSVersionTable.PSVersion.Major -lt 6) {
+    Write-Warning -Message "You are using Windows PowerShell. While pwshEmojiExplorer is compatible with Windows PowerShell, some emojis, especially those with multiple code points, may not display correctly due to limitations in Windows PowerShell's Unicode support. For the best experience, consider using PowerShell 6 or newer."
+}
+
+function GroupArgumentCompleter {
     [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSReviewUnusedParameter', '', Justification = 'Argument Completer')]
     param (
         $commandName,

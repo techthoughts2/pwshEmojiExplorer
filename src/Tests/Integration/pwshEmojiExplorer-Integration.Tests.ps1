@@ -14,8 +14,8 @@ Describe 'Integration Tests' -Tag Integration {
     Context 'Add-EmojiToText' {
 
         It 'should transform text with emoji' {
-            $result = Add-EmojiToText -Text 'World!'
-            $result | Should -Be 'World! 🗺️'
+            $result = Add-EmojiToText -Text 'Package!'
+            $result | Should -Be 'Package! 📦'
         } #it
 
         It 'should not transform text without emoji' {
@@ -24,8 +24,8 @@ Describe 'Integration Tests' -Tag Integration {
         } #it
 
         It 'should replace the word with the emoji when the -Replace switch is used' {
-            $result = Add-EmojiToText -Text 'World' -Replace
-            $result | Should -Be '🗺️'
+            $result = Add-EmojiToText -Text 'Package' -Replace
+            $result | Should -Be '📦'
         } #it
 
     } #context_add-emojitotext
@@ -76,7 +76,7 @@ Describe 'Integration Tests' -Tag Integration {
                 $emoji.Name | Should -BeExactly '😀'
             } #it
 
-            It 'should return the expected results for HexCodePoint with multiple hex values' {
+            It 'should return the expected results for HexCodePoint with multiple hex values' -Tag 'pwshOnly' {
                 $emoji = Get-Emoji -HexCodePoint '1F344 200D 1F7EB'
                 $emoji.Name | Should -BeExactly '🍄‍🟫'
             } #it
@@ -86,7 +86,7 @@ Describe 'Integration Tests' -Tag Integration {
                 $emoji.Name | Should -BeExactly '😀'
             } #it
 
-            It 'should return the expected results for Decimal with multiple decimal values' {
+            It 'should return the expected results for Decimal with multiple decimal values' -Tag 'pwshOnly' {
                 $emoji = Get-Emoji -Decimal '127812', '8205', '129003'
                 $emoji.Name | Should -BeExactly '🍄‍🟫'
             } #it

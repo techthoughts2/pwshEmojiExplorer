@@ -52,7 +52,7 @@ InModuleScope 'pwshEmojiExplorer' {
                 { ConvertTo-PSEmoji -CustomObject $badDataTypeCustomObject } | Should -Throw
             } #it
 
-        } #context_FunctionName
+        } #context_Error
 
         Context 'Success' {
 
