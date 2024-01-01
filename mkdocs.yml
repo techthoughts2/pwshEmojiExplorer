@@ -14,7 +14,7 @@ repo_url: https://github.com/techthoughts2/pwshEmojiExplorer
 # repo_name:
 # edit_uri: edit/main/docs/
 # edit_uri_template:
-site_description: tbd # meta tag to the generated HTML header
+site_description: Explore the latest Unicode emojis directly in PowerShell with pwshEmojiExplorer. Search, retrieve, and integrate emojis into scripts and projects using this PowerShell module command-line toolkit. # meta tag to the generated HTML header
 site_author: Jake Morrison # meta tag to the generated HTML header
 copyright: "pwshEmojiExplorer is licensed under the <a href='https://github.com/techthoughts2/pwshEmojiExplorer/blob/main/LICENSE'>MIT license"
 # remote_branch:
