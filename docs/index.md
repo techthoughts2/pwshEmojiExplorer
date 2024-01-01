@@ -66,6 +66,8 @@ Add-EmojiToText -Text $sampleText
 
 ## How pwshEmojiExplorer Works
 
+pwshEmojiExplorer uses a cloud-based, event driven workflow to generate a dynamic data set of emoji information based on Public data set from the Unicode Data Files. You can find more detail on the [Emoji Data Set creation component](pwshEmojiExplorer_data_workflow.md) page.
+
 ## Features
 
 - **Extensive Emoji Search**: Find emojis by name, category, code point, and more.
