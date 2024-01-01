@@ -12,13 +12,16 @@ Import-Module $PathToManifest -Force
 #-------------------------------------------------------------------------
 
 InModuleScope 'pwshEmojiExplorer' {
+
     Describe 'Get-AllEmoji Public Function Tests' -Tag Unit {
+
         BeforeAll {
             $WarningPreference = 'SilentlyContinue'
             $ErrorActionPreference = 'SilentlyContinue'
             . $PSScriptRoot\..\..\asset\emojiTestData.ps1
             $script:glData = $emojiTestData
         } #beforeAll
+
         Context 'Error' {
 
             It 'should return null when the data set is not available' {
@@ -39,6 +42,7 @@ InModuleScope 'pwshEmojiExplorer' {
             } #it
 
         } #context_Error
+
         Context 'Success' {
 
             BeforeEach {
@@ -75,7 +79,7 @@ InModuleScope 'pwshEmojiExplorer' {
                     $testEmoji2
                 } #endMock
                 (Get-AllEmoji).Count | Should -Be 0
-            }
+            } #it
 
             It 'should return the expected number of objects when IncludeAll is specified' {
                 Mock -CommandName 'ConvertTo-PSEmoji' -MockWith {
@@ -85,5 +89,7 @@ InModuleScope 'pwshEmojiExplorer' {
             } #it
 
         } #context_Success
+
     } #describe_Get-AllEmoji
+
 } #inModule

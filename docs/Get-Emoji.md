@@ -101,7 +101,7 @@ Retrieves the emoji with the exact shortcode ':smiling_face_with_hearts:'.
 Get-Emoji -ShortCode 'smiling'
 ```
 
-Performs a relaxed search and retrieves all emojis with shortcodes containing 'smiling'.
+Performs a relaxed search and retrieves all emojis with shortcode containing 'smiling'.
 
 ### EXAMPLE 8
 ```

@@ -80,6 +80,6 @@ InModuleScope 'pwshEmojiExplorer' {
 
         } #context_Success
 
-    } #describe_Get-RemoteFile
+    } #describe_ConvertTo-PSEmoji
 
 } #inModule

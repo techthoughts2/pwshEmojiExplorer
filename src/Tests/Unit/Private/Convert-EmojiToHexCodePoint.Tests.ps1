@@ -41,6 +41,6 @@ InModuleScope 'pwshEmojiExplorer' {
 
         } #context_Success
 
-    } #describe_Get-RemoteFile
+    } #describe_Convert-EmojiToHexCodePoint
 
 } #inModule

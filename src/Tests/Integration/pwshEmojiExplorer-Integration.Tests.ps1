@@ -95,6 +95,7 @@ Describe 'Integration Tests' -Tag Integration {
                 $emoji = Get-Emoji -SearchTerm 'grin'
                 $emoji.Count | Should -BeGreaterThan 2
             } #it
+
         } #context_standard
 
         Context 'Relaxed' {

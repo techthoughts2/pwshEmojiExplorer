@@ -8,6 +8,13 @@
     "[powershell]": {
         "files.encoding": "utf8bom",
         "files.autoGuessEncoding": true
-    }
+    },
+    "cSpell.enableFiletypes": [
+        "powershell"
+    ],
+    "cSpell.words": [
+        "jakemorrison",
+        "shortcode"
+    ]
 }
 

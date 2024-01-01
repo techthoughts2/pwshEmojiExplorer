@@ -30,7 +30,7 @@
 .EXAMPLE
     Get-Emoji -ShortCode 'smiling'
 
-    Performs a relaxed search and retrieves all emojis with shortcodes containing 'smiling'.
+    Performs a relaxed search and retrieves all emojis with shortcode containing 'smiling'.
 .EXAMPLE
     Get-Emoji -HexCodePoint '1F600'
 
@@ -249,6 +249,7 @@ function Get-Emoji {
             Write-Verbose -Message '....Processing general wildcard search...'
             $find = $dataSet | Where-Object { $_.Group -like "*$SearchTerm*" -or $_.Subgroup -like "*$SearchTerm*" -or $_.Description -like "*$SearchTerm*" }
         }
+
     } #if_Import-XMLDataSet
     else {
         Write-Warning -Message 'pwshEmojiExplorer was unable to source the required data set file.'

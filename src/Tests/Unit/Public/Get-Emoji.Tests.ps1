@@ -12,13 +12,16 @@ Import-Module $PathToManifest -Force
 #-------------------------------------------------------------------------
 
 InModuleScope 'pwshEmojiExplorer' {
+
     Describe 'Get-Emoji Public Function Tests' -Tag Unit {
+
         BeforeAll {
             $WarningPreference = 'SilentlyContinue'
             $ErrorActionPreference = 'SilentlyContinue'
             . $PSScriptRoot\..\..\asset\emojiTestData.ps1
             $script:glData = $emojiTestData
         } #beforeAll
+
         Context 'Error' {
 
             It 'should return null when the data set is not available' {
@@ -39,6 +42,7 @@ InModuleScope 'pwshEmojiExplorer' {
             } #it
 
         } #context_Error
+
         Context 'Success' {
 
             BeforeEach {
@@ -141,6 +145,9 @@ InModuleScope 'pwshEmojiExplorer' {
                 } #it
 
             } #context_range_ResultCounts
+
         } #context_Success
+
     } #describe_Get-Emoji
+
 } #inModule
