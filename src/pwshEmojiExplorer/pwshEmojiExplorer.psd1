@@ -12,7 +12,7 @@
     RootModule        = 'pwshEmojiExplorer.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '0.8.0'
+    ModuleVersion     = '0.8.1'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -108,7 +108,7 @@
         PSData = @{
 
             # Tags applied to this module. These help with module discovery in online galleries.
-            Tags       = @(
+            Tags         = @(
                 'emoji',
                 'emojis',
                 'unicode',
@@ -144,16 +144,16 @@
             )
 
             # A URL to the license for this module.
-            LicenseUri = 'https://github.com/techthoughts2/pwshEmojiExplorer/blob/main/LICENSE'
+            LicenseUri   = 'https://github.com/techthoughts2/pwshEmojiExplorer/blob/main/LICENSE'
 
             # A URL to the main website for this project.
-            ProjectUri = 'https://github.com/techthoughts2/pwshEmojiExplorer'
+            ProjectUri   = 'https://github.com/techthoughts2/pwshEmojiExplorer'
 
             # A URL to an icon representing this module.
-            IconUri    = 'https://github.com/techthoughts2/pwshEmojiExplorer/raw/main/docs/assets/pwshEmojiExplorer_icon.png'
+            IconUri      = 'https://github.com/techthoughts2/pwshEmojiExplorer/raw/main/docs/assets/pwshEmojiExplorer_icon.png'
 
             # ReleaseNotes of this module
-            # ReleaseNotes = ''
+            ReleaseNotes = 'https://github.com/techthoughts2/pwshEmojiExplorer/blob/main/docs/CHANGELOG.md'
 
             # Prerelease string of this module
             # Prerelease = ''
