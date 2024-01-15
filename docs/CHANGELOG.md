@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Module Changes
     - Added ReleaseNotes link to `psd1` manifest
     - Updated `Convert-EmojiToHexCodePoint` to use `System.Collections.Generic.List` instead of `System.Collections.ArrayList`
+- Misc
+    - Updated `settings.json` for tab requirements to support Readthedocs
 
 ## [0.8.0]
 
