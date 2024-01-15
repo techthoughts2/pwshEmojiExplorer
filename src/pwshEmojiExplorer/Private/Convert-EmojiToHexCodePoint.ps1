@@ -25,7 +25,7 @@ function Convert-EmojiToHexCodePoint {
     )
 
     $charArray = $Emoji.ToCharArray()
-    $codePoints = [System.Collections.ArrayList]@()
+    $codePoints = New-Object System.Collections.Generic.List[string]
 
     for ($i = 0; $i -lt $charArray.Length; $i++) {
         $codePoint = [Char]::ConvertToUtf32($Emoji, $i)
