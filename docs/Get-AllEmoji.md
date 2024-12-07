@@ -56,7 +56,7 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutBuffer, -OutVariable, -PipelineVariable, -Verbose, -WarningAction, -WarningVariable, and -ProgressAction. 
 For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
@@ -80,4 +80,3 @@ This function uses the Public data set from the Unicode Data Files and adheres t
 [https://pwshEmojiExplorer.readthedocs.io/en/latest/Get-AllEmoji/](https://pwshEmojiExplorer.readthedocs.io/en/latest/Get-AllEmoji/)
 
 [https://www.unicode.org/license.txt](https://www.unicode.org/license.txt)
-
