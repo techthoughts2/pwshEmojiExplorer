@@ -57,7 +57,7 @@ function Expand-XMLDataSet {
             ErrorAction     = 'Stop'
             Path            = '{0}/{1}' -f $script:dataPath, $script:dataFileZip
         }
-        $null = Expand-Archive @expandArchiveSplat
+        $null = Microsoft.PowerShell.Archive\Expand-Archive @expandArchiveSplat
         Write-Verbose -Message 'Expand completed.'
     } #try
     catch {
