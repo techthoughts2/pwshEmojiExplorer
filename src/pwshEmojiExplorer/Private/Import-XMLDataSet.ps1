@@ -24,6 +24,7 @@ function Import-XMLDataSet {
     if ($null -eq $script:glData) {
         $dataCheck = Invoke-XMLDataCheck
         if ($dataCheck) {
+            Write-Debug -Message 'XMLDataCheck returned true.'
             try {
                 $getContentSplat = @{
                     Path        = "$script:dataPath\$script:dataFile"
@@ -39,6 +40,7 @@ function Import-XMLDataSet {
             } #catch
         } #if_dataCheck
         else {
+            Write-Debug -Message 'XMLDataCheck returned false.'
             $result = $false
         } #else_dataCheck
     } #if_gldata

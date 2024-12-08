@@ -22,6 +22,7 @@ function Confirm-MetadataUpdate {
 
     Write-Verbose -Message 'Checking for metadata file...'
     $localMetaDataFilePath = [System.IO.Path]::Combine($script:dataPath, $script:metadataFile)
+    Write-Debug -Message ('Metadata file path: {0}' -f $localMetaDataFilePath)
     try {
         $pathEval = Test-Path -Path $localMetaDataFilePath -ErrorAction Stop
     }
@@ -33,6 +34,7 @@ function Confirm-MetadataUpdate {
 
     if (-not ($pathEval)) {
         $result = $false
+        Write-Debug -Message 'Metadata file not found.'
     } #if_pathEval
     else {
         Write-Verbose 'Metadata file found. Performing metadata comparison...'
@@ -47,8 +49,10 @@ function Confirm-MetadataUpdate {
 
         $tempMetadataFile = '{0}_temp' -f $script:metadataFile
         $tempMetadataFilePath = [System.IO.Path]::Combine($script:dataPath, $tempMetadataFile)
+        Write-Debug -Message ('Temp metadata file path: {0}' -f $tempMetadataFilePath)
         # if the temp metadata file exists, delete it
         if (Test-Path -Path $tempMetadataFile) {
+            Write-Debug -Message 'Removing temp metadata file...'
             Remove-Item -Path $tempMetadataFilePath -Force
         }
 
@@ -60,6 +64,7 @@ function Confirm-MetadataUpdate {
             return $result
         }
 
+        Write-Debug -Message 'Getting content of temp metadata file...'
         try {
             $remoteMetadata = Get-Content $tempMetadataFilePath -ErrorAction 'Stop' | ConvertFrom-Json
         }
@@ -68,6 +73,9 @@ function Confirm-MetadataUpdate {
             Write-Error $_
             return $result
         }
+
+        Write-Debug -Message ('Local metadata version: {0}' -f $localMetadata.version)
+        Write-Debug -Message ('Remote metadata version: {0}' -f $remoteMetadata.version)
 
         Write-Verbose -Message ('{0} vs {1}' -f $localMetadata.version, $remoteMetadata.version)
         if ($localMetadata.version -eq $remoteMetadata.version) {

@@ -5,7 +5,7 @@
 # region script variables
 # $script:resourcePath = "$PSScriptRoot\Resources"
 
-$script:unicodeVersion = '15.1'
+$script:unicodeVersion = '16.0'
 
 function Get-DataLocation {
     $folderName = 'pwshEmojiExplorer'

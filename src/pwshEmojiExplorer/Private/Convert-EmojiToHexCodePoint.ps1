@@ -24,6 +24,7 @@ function Convert-EmojiToHexCodePoint {
         [string]$Emoji
     )
 
+    Write-Debug -Message 'Converting emoji to hexadecimal code points...'
     $charArray = $Emoji.ToCharArray()
     $codePoints = New-Object System.Collections.Generic.List[string]
 
