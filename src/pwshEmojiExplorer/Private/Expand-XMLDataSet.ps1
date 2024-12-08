@@ -22,6 +22,7 @@ function Expand-XMLDataSet {
     $dataFile = '{0}/{1}' -f $script:dataPath, $script:dataFile
 
     Write-Verbose -Message 'Testing if data set file already exists...'
+    Write-Debug -Message ('Data file path: {0}' -f $dataFile)
     try {
         $pathEval = Test-Path -Path $dataFile -ErrorAction Stop
         Write-Verbose -Message "EVAL: $true"

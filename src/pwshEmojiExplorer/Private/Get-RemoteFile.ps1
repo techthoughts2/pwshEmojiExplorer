@@ -40,9 +40,11 @@ function Get-RemoteFile {
     }
 
     Write-Verbose -Message 'Downloading file...'
+    $outFilePath = [System.IO.Path]::Combine($script:dataPath, $OutFile)
+    Write-Debug -Message ('Out file path: {0}' -f $outFilePath)
     try {
         $invokeWebRequestSplat = @{
-            OutFile     = [System.IO.Path]::Combine($script:dataPath, $OutFile)
+            OutFile     = $outFilePath
             Uri         = 'https://{0}/{1}' -f $script:dlURI, $File
             ErrorAction = 'Stop'
         }

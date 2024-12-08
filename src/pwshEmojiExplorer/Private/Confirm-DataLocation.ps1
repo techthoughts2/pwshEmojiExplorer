@@ -20,6 +20,7 @@ function Confirm-DataLocation {
     )
     $result = $true #assume the best
     Write-Verbose -Message 'Verifying data set output location...'
+    Write-Debug -Message ('Data path: {0}' -f $script:dataPath)
     try {
         $pathEval = Test-Path -Path $script:dataPath -ErrorAction Stop
     }
@@ -28,6 +29,8 @@ function Confirm-DataLocation {
         Write-Error $_
         return $result
     }
+
+    Write-Debug -Message ('Path evaluation: {0}' -f $pathEval)
 
     if (-not ($pathEval)) {
         Write-Verbose -Message 'Creating output directory...'

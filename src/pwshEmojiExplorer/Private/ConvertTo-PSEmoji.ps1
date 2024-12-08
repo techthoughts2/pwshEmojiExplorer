@@ -45,6 +45,8 @@ function ConvertTo-PSEmoji {
         [PSCustomObject]$CustomObject
     )
 
+    Write-Debug -Message 'Converting custom object to PSEmoji object...'
+
     $emoji = [PSEmoji]::new(
         $CustomObject.Group,
         $CustomObject.Subgroup,

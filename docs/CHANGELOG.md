@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Module Changes
     - Updated to use Unicode Version: 16.0 (was previously Unicode Version: 15.1)
+    - Added more debug outputs across all functions
 - Build Updates
     - Improved integration tests
     - Updated tests to follow Pester 5 rules

@@ -28,6 +28,7 @@ function Confirm-XMLDataSet {
 
     # if the file doesn't exist, we need to download it
     Write-Verbose -Message 'Checking for data file...'
+    Write-Debug -Message ('Data file path: {0}' -f $dataFile)
     try {
         $pathEval = Test-Path -Path $dataFile -ErrorAction Stop
     }
@@ -38,6 +39,7 @@ function Confirm-XMLDataSet {
     }
 
     if (-not ($pathEval)) {
+        Write-Debug -Message 'Data file not found.'
         $result = $false
     } #if_pathEval
     else {
