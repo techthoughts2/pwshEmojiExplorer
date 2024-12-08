@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.2.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.9.0]
+
+- Module Changes
+    - Updated to use Unicode Version: 16.0 (was previously Unicode Version: 15.1)
+- Build Updates
+    - Improved integration tests
+    - Updated tests to follow Pester 5 rules
+    - Updated Bootstrap file to latest version of module dependencies
+    - Updated readthedocs dependencies versions
+
 ## [0.8.4]
 
 - Module Changes

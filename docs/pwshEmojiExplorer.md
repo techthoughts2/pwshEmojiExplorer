@@ -2,7 +2,7 @@
 Module Name: pwshEmojiExplorer
 Module Guid: 6e4813c7-6f30-42e8-adc4-b3d9b46bce9a
 Download Help Link: NA
-Help Version: 0.8.4
+Help Version: 0.9.0
 Locale: en-US
 ---
 
