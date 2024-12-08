@@ -4046,7 +4046,7 @@ InModuleScope 'pwshEmojiExplorer' {
 
         } #context_get-emoji
 
-        Context 'Groups, Subgroups, and Shortcodes' {
+        Context 'Groups, Subgroups, and Shortcodes' -Tag 'pwshOnly' {
 
             Context 'Groups' {
 
