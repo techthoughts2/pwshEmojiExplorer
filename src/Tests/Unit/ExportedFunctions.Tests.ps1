@@ -1,24 +1,22 @@
-#-------------------------------------------------------------------------
-Set-Location -Path $PSScriptRoot
-#-------------------------------------------------------------------------
-$ModuleName = 'pwshEmojiExplorer'
-$PathToManifest = [System.IO.Path]::Combine('..', '..', $ModuleName, "$ModuleName.psd1")
-#-------------------------------------------------------------------------
-if (Get-Module -Name $ModuleName -ErrorAction 'SilentlyContinue') {
-    #if the module is already in memory, remove it
-    Remove-Module -Name $ModuleName -Force
-}
-Import-Module $PathToManifest -Force
-#-------------------------------------------------------------------------
-
 BeforeAll {
     Set-Location -Path $PSScriptRoot
     $ModuleName = 'pwshEmojiExplorer'
-    $PathToManifest = [System.IO.Path]::Combine('..', '..', $ModuleName, "$ModuleName.psd1")
+    $PathToManifest = [System.IO.Path]::Combine('..\', '..\', $ModuleName, "$ModuleName.psd1")
+    Get-Module $ModuleName -ErrorAction SilentlyContinue | Remove-Module -Force
+    Import-Module $PathToManifest -Force
     $manifestContent = Test-ModuleManifest -Path $PathToManifest
     $moduleExported = Get-Command -Module $ModuleName | Select-Object -ExpandProperty Name
     $manifestExported = ($manifestContent.ExportedFunctions).Keys
 }
+BeforeDiscovery {
+    Set-Location -Path $PSScriptRoot
+    $ModuleName = 'pwshEmojiExplorer'
+    $PathToManifest = [System.IO.Path]::Combine('..\', '..\', $ModuleName, "$ModuleName.psd1")
+    $manifestContent = Test-ModuleManifest -Path $PathToManifest
+    $moduleExported = Get-Command -Module $ModuleName | Select-Object -ExpandProperty Name
+    $manifestExported = ($manifestContent.ExportedFunctions).Keys
+}
+
 Describe $ModuleName {
 
     Context 'Exported Commands' -Fixture {
